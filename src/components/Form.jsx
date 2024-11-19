@@ -12,12 +12,9 @@ const Form = () => {
         const expense = { title, price, date, category };
         console.log(expense);
 
-        let existingData = localStorage.getItem('expense');
-        if (!existingData) {
-            localStorage.setItem('expense', JSON.stringify(expense));
-        } else {
-            localStorage.setItem('expense', [existingData , JSON.stringify(expense)]);
-        }
+        let existingData = JSON.parse(localStorage.getItem('expenses')) || [];
+        existingData.push(expense);
+        localStorage.setItem('expenses', JSON.stringify(existingData));
 
         setTitle("");
         setPrice("");
