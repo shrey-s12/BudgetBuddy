@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import "./Form.css";
+import { useNavigate } from "react-router-dom";
 
 const Form = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState();
   const [date, setDate] = useState("");
   const [category, setCategory] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,11 +17,7 @@ const Form = () => {
     let existingData = JSON.parse(localStorage.getItem("expenses")) || [];
     existingData.push(expense);
     localStorage.setItem("expenses", JSON.stringify(existingData));
-
-    setTitle("");
-    setPrice("");
-    setDate("");
-    setCategory("");
+    navigate("/view");
   };
 
   return (

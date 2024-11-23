@@ -1,25 +1,52 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
   return (
-    <div className="bg-blue-600 shadow-lg">
-      <nav className="container mx-auto flex items-center justify-between py-4 px-6">
+    <nav className="bg-blue-600 shadow-md">
+      <div className="container mx-auto flex items-center justify-between py-4 px-6">
         <h1 className="text-white text-2xl font-bold">BudgetBuddy</h1>
-        <ul className="flex space-x-6">
+        <ul className="flex space-x-4">
           <li>
-            <Link to="/" className="text-white text-lg hover:text-gray-300 transition duration-300">Home</Link>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-300 font-semibold text-lg transition duration-300"
+                  : "text-white text-lg hover:text-gray-300 transition duration-300"
+              }
+            >
+              Home
+            </NavLink>
           </li>
           <li>
-            <Link to="/form" className="text-white text-lg hover:text-gray-300 transition duration-300">Form</Link>
+            <NavLink
+              to="/add-expenses"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-300 font-semibold text-lg transition duration-300"
+                  : "text-white text-lg hover:text-gray-300 transition duration-300"
+              }
+            >
+              Add Expense
+            </NavLink>
           </li>
           <li>
-            <Link to="/view" className="text-white text-lg hover:text-gray-300 transition duration-300">View</Link>
+            <NavLink
+              to="/view-expenses"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-300 font-semibold text-lg transition duration-300"
+                  : "text-white text-lg hover:text-gray-300 transition duration-300"
+              }
+            >
+              View Expenses
+            </NavLink>
           </li>
         </ul>
-      </nav>
-    </div>
-  );
-};
+      </div>
+    </nav>
+  )
+}
 
-export default Navbar;
+export default Navbar
