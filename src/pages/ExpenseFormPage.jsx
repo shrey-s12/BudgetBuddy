@@ -25,7 +25,8 @@ const ExpenseFormPage = ({ formValues, setFormValue, resetFormValues }) => {
                 <h1 className="text-3xl font-bold text-blue-600 text-center mb-6">
                     Daily Expense Tracker
                 </h1>
-                <ExpenseForm onSaveExpense={handleSaveExpense} formValues={formValues} setFormValue={setFormValue} resetFormValues={resetFormValues} />            </div>
+                <ExpenseForm onSaveExpense={handleSaveExpense} formValues={formValues} setFormValue={setFormValue} resetFormValues={resetFormValues} />
+            </div>
         </div>
     );
 };
