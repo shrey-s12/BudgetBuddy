@@ -22,7 +22,7 @@
 
 
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import ExpenseFormPage from './pages/ExpenseFormPage';
 import ExpenseListPage from './pages/ExpenseListPage';
 import Home from "./components/Home";
@@ -30,30 +30,21 @@ import Navbar from './components/Navbar';
 
 
 function App() {
-  const [formValues, setFormValues] = useState({});
-  const setFormValue = (value, key) => {
-    setFormValues(currentFormValues => ({ ...currentFormValues, [key]: value }));
-  };
-  const resetFormValues = () => {
-    setFormValues({});
-  };
 
   return (
-    <BrowserRouter>
-      <div className="App min-h-screen bg-gray-100">
-        {/* Navbar */}
-        <Navbar />
+    <div className="App min-h-screen bg-gray-100">
+      {/* Navbar */}
+      <Navbar />
 
-        {/* Main Content */}
-        <main className="container mx-auto p-6">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/add-expenses" element={<ExpenseFormPage formValues={formValues} setFormValue={setFormValue} resetFormValues={resetFormValues} />} />
-            <Route path="/view-expenses" element={<ExpenseListPage setFormValues={setFormValues} />} />
-          </Routes>
-        </main>
-      </div>
-    </BrowserRouter>
+      {/* Main Content */}
+      <main className="container mx-auto p-6">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/add-expenses" element={<ExpenseFormPage />} />
+          <Route path="/view-expenses" element={<ExpenseListPage />} />
+        </Routes>
+      </main>
+    </div>
   );
 }
 

@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ExpenseList from '../components/ExpenseList';
 import { useNavigate } from 'react-router-dom';
+import FormValuesContext from '../context/FormValues';
 
 function useForceUpdate() {
     const [, setValue] = useState(0);
     return () => setValue(value => value + 1);
 }
 
-const ExpenseListPage = ({ setFormValues }) => {
+const ExpenseListPage = () => {
     const navigate = useNavigate()
     const forceUpdate = useForceUpdate();
+
+    const { setFormValues } = useContext(FormValuesContext);
 
     const expensesDataString = localStorage.getItem('expenses_data_key') || '[]';
     const expenses = JSON.parse(expensesDataString)

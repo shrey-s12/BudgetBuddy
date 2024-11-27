@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { DateInput, AmountInput, TitleInput, CategoryInput } from './Inputs';
+import FormValuesContext from '../context/FormValues';
 
-const ExpenseForm = ({ onSaveExpense, formValues, setFormValue, resetFormValues }) => {
+const ExpenseForm = ({ onSaveExpense }) => {
+
+  const { formValues, setFormValue, resetFormValues } = useContext(FormValuesContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();

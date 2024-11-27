@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ExpenseForm from '../components/ExpenseForm';
 import { useNavigate } from 'react-router-dom';
+import FormValuesContext from '../context/FormValues';
 
-const ExpenseFormPage = ({ formValues, setFormValue, resetFormValues }) => {
+const ExpenseFormPage = () => {
     const navigate = useNavigate();
+    const { resetFormValues } = useContext(FormValuesContext);
+
     const expensesDataString = localStorage.getItem('expenses_data_key') || '[]';
     const expenses = JSON.parse(expensesDataString)
 
@@ -25,7 +28,7 @@ const ExpenseFormPage = ({ formValues, setFormValue, resetFormValues }) => {
                 <h1 className="text-3xl font-bold text-blue-600 text-center mb-6">
                     Daily Expense Tracker
                 </h1>
-                <ExpenseForm onSaveExpense={handleSaveExpense} formValues={formValues} setFormValue={setFormValue} resetFormValues={resetFormValues} />
+                <ExpenseForm onSaveExpense={handleSaveExpense} />
             </div>
         </div>
     );
