@@ -1,24 +1,20 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import ExpenseForm from '../components/ExpenseForm';
 import { useNavigate } from 'react-router-dom';
-import FormValuesContext from '../context/FormValues';
+import { getExpenses, setExpenses } from "../service/localStorage"
 
-const ExpenseFormPage = () => {
+const ExpenseFormPage = ({ editIndex, setEditIndex }) => {
     const navigate = useNavigate();
-    const { resetFormValues } = useContext(FormValuesContext);
-
-    const expensesDataString = localStorage.getItem('expenses_data_key') || '[]';
-    const expenses = JSON.parse(expensesDataString)
 
     const handleSaveExpense = (expense, ind) => {
-        if (ind !== undefined) {
+        const expenses = getExpenses();
+        if (ind > -1) {
             expenses[ind] = expense;
         } else {
             expenses.push(expense);
         }
-        const updatedExpensesString = JSON.stringify(expenses);
-        localStorage.setItem('expenses_data_key', updatedExpensesString);
-        resetFormValues();
+        setExpenses(expenses);
+        setEditIndex(-1);
         navigate('/view-expenses');
     };
 
@@ -28,7 +24,7 @@ const ExpenseFormPage = () => {
                 <h1 className="text-3xl font-bold text-blue-600 text-center mb-6">
                     Daily Expense Tracker
                 </h1>
-                <ExpenseForm onSaveExpense={handleSaveExpense} />
+                <ExpenseForm onSaveExpense={handleSaveExpense} editIndex={editIndex} key={editIndex} />
             </div>
         </div>
     );

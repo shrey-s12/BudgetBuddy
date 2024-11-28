@@ -30,7 +30,7 @@ import Navbar from './components/Navbar';
 
 
 function App() {
-
+  const [editIndex, setEditIndex] = useState(-1);
   return (
     <div className="App min-h-screen bg-gray-100">
       {/* Navbar */}
@@ -40,8 +40,8 @@ function App() {
       <main className="container mx-auto p-6">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/add-expenses" element={<ExpenseFormPage />} />
-          <Route path="/view-expenses" element={<ExpenseListPage />} />
+          <Route path="/add-expenses" element={<ExpenseFormPage editIndex={editIndex} setEditIndex={setEditIndex} />} />
+          <Route path="/view-expenses" element={<ExpenseListPage setEditIndex={setEditIndex} />} />
         </Routes>
       </main>
     </div>
