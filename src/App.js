@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import ExpenseFormPage from './pages/ExpenseFormPage';
 import ExpenseListPage from './pages/ExpenseListPage';
 import Home from "./components/Home";
 import Navbar from './components/Navbar';
+import { getExpensesFromBackend, setExpensesInBackend } from './service/localStorage';
 
 function App() {
   const [editIndex, setEditIndex] = useState(-1);
   const [expenses, setExpenses] = useState([]);
+  useEffect(() => {
+    getExpensesFromBackend()
+      .then(expensesVal => setExpenses(expensesVal))
+      .catch(err => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    setExpensesInBackend(expenses)
+      .then(() => console.log("Expenses updated in local storage"))
+      .catch(err => console.log(err));
+  }, [expenses])
 
   return (
     <div className="App min-h-screen bg-gray-100">

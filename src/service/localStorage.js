@@ -1,5 +1,5 @@
 const EXPENSES_DATA_KEY = 'expenses_data_key';
-const DELAY = 2000;
+const DELAY = 3000;
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function getExpensesFromBackend() {
