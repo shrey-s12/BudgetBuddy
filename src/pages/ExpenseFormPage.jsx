@@ -1,19 +1,19 @@
 import React from 'react';
 import ExpenseForm from '../components/ExpenseForm';
 import { useNavigate } from 'react-router-dom';
-import { getExpenses, setExpenses } from "../service/localStorage"
 
-const ExpenseFormPage = ({ editIndex, setEditIndex }) => {
+const ExpenseFormPage = ({ expenses, setExpenses, editIndex, setEditIndex }) => {
     const navigate = useNavigate();
 
     const handleSaveExpense = (expense, ind) => {
-        const expenses = getExpenses();
+        // const expenses = getExpenses();
+        const updatedExpenses = [...expenses];
         if (ind > -1) {
-            expenses[ind] = expense;
+            updatedExpenses[ind] = expense;
         } else {
-            expenses.push(expense);
+            updatedExpenses.push(expense);
         }
-        setExpenses(expenses);
+        setExpenses(updatedExpenses);
         setEditIndex(-1);
         navigate('/view-expenses');
     };
@@ -24,7 +24,7 @@ const ExpenseFormPage = ({ editIndex, setEditIndex }) => {
                 <h1 className="text-3xl font-bold text-blue-600 text-center mb-6">
                     Daily Expense Tracker
                 </h1>
-                <ExpenseForm onSaveExpense={handleSaveExpense} editIndex={editIndex} key={editIndex} />
+                <ExpenseForm expenses={expenses} onSaveExpense={handleSaveExpense} editIndex={editIndex} key={editIndex} />
             </div>
         </div>
     );
