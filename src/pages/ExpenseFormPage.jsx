@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ExpenseForm from '../components/ExpenseForm';
 import { useNavigate } from 'react-router-dom';
+import ExpensesContext from '../context/ExpensesContext';
 
-const ExpenseFormPage = ({ expenses, setExpenses, editIndex, setEditIndex }) => {
+const ExpenseFormPage = () => {
     const navigate = useNavigate();
+    const { expenses, setExpenses, setEditIndex } = useContext(ExpensesContext);
 
     const handleSaveExpense = (expense, ind) => {
-        // const expenses = getExpenses();
         const updatedExpenses = [...expenses];
         if (ind > -1) {
             updatedExpenses[ind] = expense;
@@ -24,7 +25,7 @@ const ExpenseFormPage = ({ expenses, setExpenses, editIndex, setEditIndex }) => 
                 <h1 className="text-3xl font-bold text-blue-600 text-center mb-6">
                     Daily Expense Tracker
                 </h1>
-                <ExpenseForm expenses={expenses} onSaveExpense={handleSaveExpense} editIndex={editIndex} key={editIndex} />
+                <ExpenseForm onSaveExpense={handleSaveExpense} />
             </div>
         </div>
     );

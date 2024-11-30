@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { DateInput, AmountInput, TitleInput, CategoryInput } from './Inputs';
-// import { getExpenses } from "../service/localStorage"
+import ExpensesContext from '../context/ExpensesContext';
 
 const emptyForm = () => ({
   date: "",
@@ -10,7 +10,6 @@ const emptyForm = () => ({
 });
 
 function formValuesFromLocalStorage(ind, expenses) {
-  // const expenses = getExpenses();
   const expense = expenses[ind];
   const formValues = {
     ...expense,
@@ -18,7 +17,8 @@ function formValuesFromLocalStorage(ind, expenses) {
   return formValues;
 }
 
-const ExpenseForm = ({ expenses, onSaveExpense, editIndex }) => {
+const ExpenseForm = ({ onSaveExpense }) => {
+  const { expenses, editIndex } = useContext(ExpensesContext);
   const prefilledForm = editIndex > -1 ? formValuesFromLocalStorage(editIndex, expenses) : emptyForm();
   const [formValues, setFormValues] = useState(prefilledForm);
 
