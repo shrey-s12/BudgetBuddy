@@ -5,16 +5,18 @@ import ExpensesContext from '../context/ExpensesContext';
 
 const ExpenseFormPage = () => {
     const navigate = useNavigate();
-    const { expenses, setExpenses, setEditIndex } = useContext(ExpensesContext);
+    const { dispatchExpenseAction, setEditIndex } = useContext(ExpensesContext);
 
     const handleSaveExpense = (expense, ind) => {
-        const updatedExpenses = [...expenses];
+        const action = {};
         if (ind > -1) {
-            updatedExpenses[ind] = expense;
+            action.type = "EDIT";
+            action.payload = { ind, expense };
         } else {
-            updatedExpenses.push(expense);
+            action.type = "ADD";
+            action.payload = { expense };
         }
-        setExpenses(updatedExpenses);
+        dispatchExpenseAction(action)
         setEditIndex(-1);
         navigate('/view-expenses');
     };

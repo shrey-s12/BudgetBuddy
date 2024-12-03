@@ -1,16 +1,20 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import { getExpensesFromBackend, setExpensesInBackend } from "../service/localStorage";
+import expenseReducer from "../reducers/expenseReducer";
 
 const ExpensesContext = createContext();
 
 export const ExpensesProvider = ({ children }) => {
 
     const [editIndex, setEditIndex] = useState(-1);
-    const [expenses, setExpenses] = useState([]);
+    const [expenses, dispatchExpenseAction] = useReducer(expenseReducer, []);
     useEffect(() => {
         // Start of the effect
         getExpensesFromBackend()
-            .then(expensesVal => setExpenses(expensesVal))
+            .then(expensesVal => dispatchExpenseAction({
+                type: "FILL",
+                payload: { expenses: expensesVal }
+            }))
             .catch(err => console.log(err));
         // End of the effect (Cleanup function)
         return () => {
@@ -19,6 +23,9 @@ export const ExpensesProvider = ({ children }) => {
     }, []);
 
     useEffect(() => {
+        if (expenses === null) {
+            return;
+        }
         setExpensesInBackend(expenses)
             .then(() => console.log("Expenses updated in local storage"))
             .catch(err => console.log(err));
@@ -29,7 +36,7 @@ export const ExpensesProvider = ({ children }) => {
 
     const contextObject = {
         expenses,
-        setExpenses,
+        dispatchExpenseAction,
         editIndex,
         setEditIndex
     }

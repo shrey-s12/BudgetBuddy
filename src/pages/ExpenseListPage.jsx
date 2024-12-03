@@ -5,13 +5,13 @@ import ExpensesContext from '../context/ExpensesContext';
 
 const ExpenseListPage = () => {
     const navigate = useNavigate();
-    const { expenses, setExpenses, setEditIndex } = useContext(ExpensesContext);
+    const { dispatchExpenseAction, setEditIndex } = useContext(ExpensesContext);
 
     const handleDeleteExpense = (ind) => {
-        const updatedExpenses = expenses.filter((_, index) => {
-            return index !== ind;
+        dispatchExpenseAction({
+            type: "DELETE",
+            payload: { ind: ind }
         });
-        setExpenses(updatedExpenses);
     };
 
     const handleEditExpense = (ind) => {
