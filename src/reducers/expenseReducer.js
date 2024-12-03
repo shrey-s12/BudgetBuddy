@@ -3,7 +3,7 @@ const reducer = (state, action) => {
 
         case "FILL": {
             if (state !== null) {
-                console.log(action.type, " is unsupported. Data already loaded from backend.");
+                console.error(action.type, " is unsupported. Data already loaded from backend.");
                 return state;
             }
             const { expenses } = action.payload;
@@ -11,6 +11,7 @@ const reducer = (state, action) => {
         }
 
         case "DELETE": {
+            if (isInvalidState(state, action)) return state;
             const { ind } = action.payload;
             return state.filter((_, index) => index !== ind);
         }
