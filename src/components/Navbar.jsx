@@ -40,7 +40,7 @@ const Navbar = () => {
                   : "text-white text-lg hover:text-gray-300 transition duration-300"
               }
             >
-              View Expenses
+              List View
             </NavLink>
           </li>
           <li>
@@ -52,7 +52,7 @@ const Navbar = () => {
                   : "text-white text-lg hover:text-gray-300 transition duration-300"
               }
             >
-              Card Expenses
+              Card View
             </NavLink>
           </li>
         </ul>

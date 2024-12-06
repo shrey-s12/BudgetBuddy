@@ -1,8 +1,6 @@
-import React, { useContext } from 'react';
-import ExpensesContext from '../context/ExpensesContext';
+import React from 'react';
 
-const ExpenseList = ({ onDeleteExpense, onEditExpense }) => {
-  const { expenses } = useContext(ExpensesContext);
+const ExpenseList = ({ expenses, onDeleteExpense, onEditExpense }) => {
   return (
     <div className="overflow-x-auto">
       <table className="table-auto w-full border border-gray-300 text-left">

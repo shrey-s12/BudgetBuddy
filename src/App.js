@@ -4,10 +4,8 @@ import ExpenseFormPage from './pages/ExpenseFormPage';
 import ExpenseListPage from './pages/ExpenseListPage';
 import Home from "./components/Home";
 import Navbar from './components/Navbar';
-// import ExpensesContext from './context/ExpensesContext';
 
 function App() {
-  // const { setToggleView } = useContext(ExpensesContext);
 
   return (
     <div className="App min-h-screen bg-gray-100">

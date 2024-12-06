@@ -1,8 +1,6 @@
-import React, { useContext } from 'react';
-import ExpensesContext from '../context/ExpensesContext';
+import React from 'react';
 
-const ExpenseCard = ({ onDeleteExpense, onEditExpense }) => {
-    const { expenses } = useContext(ExpensesContext);
+const ExpenseCard = ({ expenses, onDeleteExpense, onEditExpense }) => {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-4">
             {expenses.map((expense, index) => (
