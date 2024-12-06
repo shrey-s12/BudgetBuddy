@@ -4,9 +4,10 @@ import ExpenseFormPage from './pages/ExpenseFormPage';
 import ExpenseListPage from './pages/ExpenseListPage';
 import Home from "./components/Home";
 import Navbar from './components/Navbar';
-import ExpenseCardPage from './pages/ExpenseCardPage';
+// import ExpensesContext from './context/ExpensesContext';
 
 function App() {
+  // const { setToggleView } = useContext(ExpensesContext);
 
   return (
     <div className="App min-h-screen bg-gray-100">
@@ -18,8 +19,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/add-expenses" element={<ExpenseFormPage />} />
-          <Route path="/view-expenses" element={<ExpenseListPage />} />
-          <Route path="/card-expenses" element={<ExpenseCardPage />} />
+          <Route path="/view-expenses" element={<ExpenseListPage view={true} />} />
+          <Route path="/card-expenses" element={<ExpenseListPage view={false} />} />
         </Routes>
       </main>
     </div>

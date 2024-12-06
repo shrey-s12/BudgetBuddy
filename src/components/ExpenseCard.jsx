@@ -6,7 +6,7 @@ const ExpenseCard = ({ onDeleteExpense, onEditExpense }) => {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-4">
             {expenses.map((expense, index) => (
-                <div key={index} className="bg-white shadow-lg rounded-lg p-5 hover:shadow-2xl transition-shadow">
+                <div key={index} className="bg-white shadow-lg rounded-lg p-5">
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-xl font-semibold text-gray-800">{expense.title}</h2>
                         <p className="text-sm text-gray-500">{expense.date}</p>

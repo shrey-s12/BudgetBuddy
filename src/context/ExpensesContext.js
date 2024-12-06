@@ -7,7 +7,7 @@ const ExpensesContext = createContext();
 export const ExpensesProvider = ({ children }) => {
 
     const [editIndex, setEditIndex] = useState(-1);
-    const [expenses, dispatchExpenseAction] = useReducer(expenseReducer, []);
+    const [expenses, dispatchExpenseAction] = useReducer(expenseReducer, null);
     useEffect(() => {
         // Start of the effect
         getExpensesFromBackend()
@@ -35,10 +35,10 @@ export const ExpensesProvider = ({ children }) => {
     }, [expenses])
 
     const contextObject = {
-        expenses,
+        expenses: expenses || [],
         dispatchExpenseAction,
         editIndex,
-        setEditIndex
+        setEditIndex,
     }
     return (
         <ExpensesContext.Provider value={contextObject}>
