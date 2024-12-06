@@ -43,6 +43,18 @@ const Navbar = () => {
               View Expenses
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/card-expenses"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-300 font-semibold text-lg transition duration-300"
+                  : "text-white text-lg hover:text-gray-300 transition duration-300"
+              }
+            >
+              Card Expenses
+            </NavLink>
+          </li>
         </ul>
       </div>
     </nav>

@@ -4,6 +4,7 @@ import ExpenseFormPage from './pages/ExpenseFormPage';
 import ExpenseListPage from './pages/ExpenseListPage';
 import Home from "./components/Home";
 import Navbar from './components/Navbar';
+import ExpenseCardPage from './pages/ExpenseCardPage';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/add-expenses" element={<ExpenseFormPage />} />
           <Route path="/view-expenses" element={<ExpenseListPage />} />
+          <Route path="/card-expenses" element={<ExpenseCardPage />} />
         </Routes>
       </main>
     </div>
