@@ -6,7 +6,8 @@ const ExpensesContext = createContext();
 
 export const ExpensesProvider = ({ children }) => {
 
-    const [editIndex, setEditIndex] = useState(-1);
+    // const [editIndex, setEditIndex] = useState(-1);
+    const [editId, setEditId] = useState(-1);
     const [expenses, dispatchExpenseAction] = useReducer(expenseReducer, null);
     useEffect(() => {
         // Start of the effect
@@ -37,8 +38,8 @@ export const ExpensesProvider = ({ children }) => {
     const contextObject = {
         expenses: expenses || [],
         dispatchExpenseAction,
-        editIndex,
-        setEditIndex,
+        editId,
+        setEditId,
     }
     return (
         <ExpensesContext.Provider value={contextObject}>

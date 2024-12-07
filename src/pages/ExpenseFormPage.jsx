@@ -5,19 +5,19 @@ import ExpensesContext from '../context/ExpensesContext';
 
 const ExpenseFormPage = () => {
     const navigate = useNavigate();
-    const { dispatchExpenseAction, setEditIndex } = useContext(ExpensesContext);
+    const { dispatchExpenseAction, setEditId } = useContext(ExpensesContext);
 
-    const handleSaveExpense = (expense, ind) => {
+    const handleSaveExpense = (expense, id) => {
         const action = {};
-        if (ind > -1) {
+        if (id > -1) {
             action.type = "EDIT";
-            action.payload = { ind, expense };
+            action.payload = { id, expense };
         } else {
             action.type = "ADD";
             action.payload = { expense };
         }
         dispatchExpenseAction(action)
-        setEditIndex(-1);
+        setEditId(-1);
         navigate('/view-expenses');
     };
 

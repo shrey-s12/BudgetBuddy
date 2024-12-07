@@ -1,4 +1,9 @@
-const reducer = (state, action) => {
+const generateId = (expenses) => {
+    const maxId = expenses.reduce((acc, ele) => Math.max(acc, ele.id), -1);
+    return maxId + 1;
+}
+
+export default function expenseReducer(state, action) {
     switch (action.type) {
 
         case "FILL": {
@@ -12,24 +17,33 @@ const reducer = (state, action) => {
 
         case "DELETE": {
             if (isInvalidState(state, action)) return state;
-            const { ind } = action.payload;
-            return state.filter((_, index) => index !== ind);
+            const { id } = action.payload;
+            return state.filter(ele => ele.id !== id);
         }
 
         case "EDIT": {
             if (isInvalidState(state, action)) return state;
-            const { ind, expense } = action.payload;
+            const { id, expense } = action.payload;
             const updatedState = [...state];
-            updatedState[ind] = expense;
+            const ind = updatedState.findIndex(ele => ele.id === id);
+            updatedState[ind] = {
+                ...expense,
+                id,
+            };
             return updatedState;
         }
 
         case "ADD": {
             if (isInvalidState(state, action)) return state;
             const { expense } = action.payload;
-            const updatedState = [...state];
-            updatedState.push(expense);
-            return updatedState;
+            const newId = generateId(state);
+            return [
+                ...state,
+                {
+                    ...expense,
+                    id: newId,
+                }
+            ];
         }
 
         default: {
@@ -46,4 +60,10 @@ const isInvalidState = (state, action) => {
     return false;
 }
 
-export default reducer;
+// Action Creators
+export const deleteExpenseAction = (id) => {
+    return {
+        type: "DELETE",
+        payload: { id }
+    };
+}

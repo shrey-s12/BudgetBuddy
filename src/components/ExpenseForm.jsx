@@ -18,8 +18,8 @@ function formValuesFromLocalStorage(ind, expenses) {
 }
 
 const ExpenseForm = ({ onSaveExpense }) => {
-  const { expenses, editIndex } = useContext(ExpensesContext);
-  const prefilledForm = editIndex > -1 ? formValuesFromLocalStorage(editIndex, expenses) : emptyForm();
+  const { expenses, editId } = useContext(ExpensesContext);
+  const prefilledForm = editId > -1 ? formValuesFromLocalStorage(editId, expenses) : emptyForm();
   const [formValues, setFormValues] = useState(prefilledForm);
 
   const handleSubmit = (e) => {
@@ -29,7 +29,7 @@ const ExpenseForm = ({ onSaveExpense }) => {
       amount: +formValues.amount,
       category: formValues.category
     }
-    onSaveExpense(expense, editIndex);
+    onSaveExpense(expense, editId);
     setFormValues(emptyForm());
   };
 
@@ -38,7 +38,7 @@ const ExpenseForm = ({ onSaveExpense }) => {
   const [title, setTitle] = [formValues.title, (val) => setFormValues((state) => ({ ...state, title: val }))]
   const [category, setCategory] = [formValues.category, (val) => setFormValues((state) => ({ ...state, category: val }))]
 
-  const submitButtonText = editIndex > -1 ? "Edit Expense" : "Add Expense";
+  const submitButtonText = editId > -1 ? "Edit Expense" : "Add Expense";
 
   return (
     <form
@@ -46,7 +46,7 @@ const ExpenseForm = ({ onSaveExpense }) => {
       className="bg-white shadow-md rounded-lg p-6 max-w-lg mx-auto space-y-4"
     >
 
-      {editIndex > -1 ?
+      {editId > -1 ?
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-4">Edit Expense</h2>
         : <h2 className="text-2xl font-bold text-center text-blue-600 mb-4">Add New Expense</h2>}
 

@@ -14,21 +14,21 @@ const ExpenseList = ({ expenses, onDeleteExpense, onEditExpense }) => {
           </tr>
         </thead>
         <tbody>
-          {expenses.map((expense, index) => (
-            <tr key={index} className="hover:bg-gray-50">
+          {expenses.map((expense) => (
+            <tr key={expense.id} className="hover:bg-gray-50">
               <td className="border px-4 py-2">{expense.date}</td>
               <td className="border px-4 py-2">${expense.amount}</td>
               <td className="border px-4 py-2">{expense.title}</td>
               <td className="border px-4 py-2">{expense.category}</td>
               <td className="border px-4 py-2">
                 <button
-                  onClick={() => onDeleteExpense(index)}
+                  onClick={() => onDeleteExpense(expense.id)}
                   className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 mr-2"
                 >
                   Delete
                 </button>
                 <button
-                  onClick={() => onEditExpense(index)}
+                  onClick={() => onEditExpense(expense.id)}
                   className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
                 >
                   Edit

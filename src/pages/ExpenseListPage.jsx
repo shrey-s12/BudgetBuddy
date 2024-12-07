@@ -3,34 +3,24 @@ import ExpenseList from '../components/ExpenseList';
 import { useNavigate } from 'react-router-dom';
 import ExpensesContext from '../context/ExpensesContext';
 import ExpenseCard from '../components/ExpenseCard';
+import { deleteExpenseAction } from '../reducers/expenseReducer';
 
 const ExpenseListPage = ({ view }) => {
     const navigate = useNavigate();
-    const { expenses, dispatchExpenseAction, setEditIndex } = useContext(ExpensesContext);
+    const { expenses, dispatchExpenseAction, setEditId } = useContext(ExpensesContext);
 
-    // const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedCategory, setSelectedCategory] = useState([]);
-    const [filteredExpenses, setFilteredExpenses] = useState(expenses);
     const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
     const handleDeleteExpense = (ind) => {
-        dispatchExpenseAction({
-            type: "DELETE",
-            payload: { ind: ind },
-        });
+        console.log(ind)
+        dispatchExpenseAction(deleteExpenseAction(ind));
     };
 
-    const handleEditExpense = (ind) => {
-        setEditIndex(ind);
+    const handleEditExpense = (id) => {
+        setEditId(id);
         navigate('/add-expenses');
     };
-
-    // const categories = ['All', ...Array.from(new Set(expenses.map((expense) => expense.category)))];
-
-    // const filteredExpenses =
-    //     selectedCategory && selectedCategory !== 'All'
-    //         ? expenses.filter((expense) => expense.category === selectedCategory)
-    //         : expenses;
 
     const categories = Array.from(new Set(expenses.map((expense) => expense.category)));
 
@@ -42,12 +32,9 @@ const ExpenseListPage = ({ view }) => {
         );
     };
 
-    const applyFilters = () => {
-        const filtered = selectedCategory.length > 0
-            ? expenses.filter((expense) => selectedCategory.includes(expense.category))
-            : expenses;
-        setFilteredExpenses(filtered);
-    };
+    const filteredExpenses = selectedCategory.length > 0
+        ? expenses.filter((expense) => selectedCategory.includes(expense.category))
+        : expenses;
 
     return (
         <div>
@@ -79,33 +66,29 @@ const ExpenseListPage = ({ view }) => {
                                 </label>
                             ))}
                         </div>
-                        <div className="border-t p-2">
+                        <div className="flex justify-around border-t p-2">
                             <button
                                 onClick={() => {
-                                    applyFilters();
                                     setIsDropDownOpen(false);
                                 }}
                                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                             >
                                 Apply
                             </button>
+                            <button>
+                                <button
+                                    onClick={() => {
+                                        setSelectedCategory([]);
+                                        setIsDropDownOpen(false);
+                                    }}
+                                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                                >
+                                    Clear
+                                </button>
+                            </button>
                         </div>
                     </div>
                 )}
-                {/* <label htmlFor="category" className="mr-2">Filter by Category:</label> */}
-
-                {/* <select
-                    id="category"
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="border rounded px-2 py1"
-                >
-                    {categories.map((category) => (
-                        <option key={category} value={category}>
-                            {category}
-                        </option>
-                    ))}
-                </select> */}
             </div>
 
             {/* Display No Expenses Message or the Filtered List */}

@@ -3,8 +3,8 @@ import React from 'react';
 const ExpenseCard = ({ expenses, onDeleteExpense, onEditExpense }) => {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-4">
-            {expenses.map((expense, index) => (
-                <div key={index} className="bg-white shadow-lg rounded-lg p-5">
+            {expenses.map((expense) => (
+                <div key={expense.id} className="bg-white shadow-lg rounded-lg p-5">
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-xl font-semibold text-gray-800">{expense.title}</h2>
                         <p className="text-sm text-gray-500">{expense.date}</p>
@@ -15,13 +15,13 @@ const ExpenseCard = ({ expenses, onDeleteExpense, onEditExpense }) => {
                     </div>
                     <div className="flex space-x-2">
                         <button
-                            onClick={() => onDeleteExpense(index)}
+                            onClick={() => onDeleteExpense(expense.id)}
                             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
                         >
                             Delete
                         </button>
                         <button
-                            onClick={() => onEditExpense(index)}
+                            onClick={() => onEditExpense(expense.id)}
                             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
                         >
                             Edit
