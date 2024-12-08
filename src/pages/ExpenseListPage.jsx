@@ -1,16 +1,20 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useReducer } from 'react';
 import ExpenseList from '../components/ExpenseList';
 import { useNavigate } from 'react-router-dom';
 import ExpensesContext from '../context/ExpensesContext';
 import ExpenseCard from '../components/ExpenseCard';
 import { deleteExpenseAction } from '../reducers/expenseReducer';
+import expenseFilterReducer from '../reducers/filterReducer';
 
 const ExpenseListPage = ({ view }) => {
     const navigate = useNavigate();
     const { expenses, dispatchExpenseAction, setEditId } = useContext(ExpensesContext);
 
-    const [selectedCategory, setSelectedCategory] = useState([]);
-    const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+    const initialFilterState = { selectedCategory: [], isDropDownOpen: false };
+    const [filterState, dispatchFilterAction] = useReducer(
+        expenseFilterReducer,
+        initialFilterState
+    );
 
     const handleDeleteExpense = (ind) => {
         console.log(ind)
@@ -22,18 +26,28 @@ const ExpenseListPage = ({ view }) => {
         navigate('/add-expenses');
     };
 
-    const categories = Array.from(new Set(expenses.map((expense) => expense.category)));
-
-    const handleCheckboxChange = (category) => {
-        setSelectedCategory((prevSelected) =>
-            prevSelected.includes(category)
-                ? prevSelected.filter((cat) => cat !== category) // Remove category if already selected
-                : [...prevSelected, category] // Add category if not selected
-        );
+    const handleDropDownToggle = () => {
+        dispatchFilterAction({ type: 'TOGGLE_DROPDOWN' });
     };
 
-    const filteredExpenses = selectedCategory.length > 0
-        ? expenses.filter((expense) => selectedCategory.includes(expense.category))
+    const handleCheckboxChange = (category) => {
+        dispatchFilterAction({
+            type: 'TOGGLE_CATEGORY',
+            payload: category,
+        })
+    };
+
+    const applyFilter = () => {
+        dispatchFilterAction({ type: 'APPLY_FILTER' });
+    };
+
+    const clearFilter = () => {
+        dispatchFilterAction({ type: 'CLEAR_FILTER' });
+    };
+
+    const categories = Array.from(new Set(expenses.map((expense) => expense.category)));
+    const filteredExpenses = filterState.selectedCategory.length > 0
+        ? expenses.filter((expense) => filterState.selectedCategory.includes(expense.category))
         : expenses;
 
     return (
@@ -41,13 +55,13 @@ const ExpenseListPage = ({ view }) => {
             {/* Category Filter Dropdown */}
             <div className="relative mb-4">
                 <button
-                    onClick={() => setIsDropDownOpen(!isDropDownOpen)}
+                    onClick={handleDropDownToggle}
                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                 >
                     Filter by Categories
                 </button>
 
-                {isDropDownOpen && (
+                {filterState.isDropDownOpen && (
                     <div className="absolute bg-white border rounded shadow-md mt-2 w-64 max-h-64 overflow-y-auto">
                         <div className="p-2">
                             {categories.map((category) => (
@@ -58,7 +72,7 @@ const ExpenseListPage = ({ view }) => {
                                     <input
                                         type="checkbox"
                                         value={category}
-                                        checked={selectedCategory.includes(category)}
+                                        checked={filterState.selectedCategory.includes(category)}
                                         onChange={() => handleCheckboxChange(category)}
                                         className="form-checkbox"
                                     />
@@ -68,19 +82,14 @@ const ExpenseListPage = ({ view }) => {
                         </div>
                         <div className="flex justify-around border-t p-2">
                             <button
-                                onClick={() => {
-                                    setIsDropDownOpen(false);
-                                }}
+                                onClick={applyFilter}
                                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                             >
                                 Apply
                             </button>
                             <button>
                                 <button
-                                    onClick={() => {
-                                        setSelectedCategory([]);
-                                        setIsDropDownOpen(false);
-                                    }}
+                                    onClick={clearFilter}
                                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                                 >
                                     Clear

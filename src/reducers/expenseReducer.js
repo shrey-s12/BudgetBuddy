@@ -1,6 +1,9 @@
-const generateId = (expenses) => {
-    const maxId = expenses.reduce((acc, ele) => Math.max(acc, ele.id), -1);
-    return maxId + 1;
+const generateNewId = (state) => {
+    let newId = -1;
+    state.forEach(ele => {
+        newId = Math.max(newId, ele.id);
+    });
+    return newId + 1;
 }
 
 export default function expenseReducer(state, action) {
@@ -36,7 +39,7 @@ export default function expenseReducer(state, action) {
         case "ADD": {
             if (isInvalidState(state, action)) return state;
             const { expense } = action.payload;
-            const newId = generateId(state);
+            const newId = generateNewId(state);
             return [
                 ...state,
                 {
@@ -55,6 +58,10 @@ export default function expenseReducer(state, action) {
 const isInvalidState = (state, action) => {
     if (state === null) {
         console.warn(action.type, " is unsupported. Data not loaded from backend yet!");
+        return true;
+    }
+    if (state.reduce((isInvalid, ele) => (isInvalid || ele.id === undefined), false)) {
+        console.error("State invalid, some of the expenses don't have an 'id'");
         return true;
     }
     return false;
