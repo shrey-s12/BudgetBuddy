@@ -1,20 +1,22 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext } from 'react';
 import ExpenseList from '../components/ExpenseList';
 import { useNavigate } from 'react-router-dom';
 import ExpensesContext from '../context/ExpensesContext';
 import ExpenseCard from '../components/ExpenseCard';
-import expenseFilterReducer from '../reducers/filterReducer';
+// import expenseFilterReducer from '../reducers/filterReducer';
 import { deleteExpense } from '../slices/expenseSlice';
+import { toggleDropDown, toggleCategory, applyFilter, clearFilter } from '../slices/filterSlice';
 
 const ExpenseListPage = ({ view }) => {
     const navigate = useNavigate();
-    const { expenses, dispatchExpenseAction, setEditId } = useContext(ExpensesContext);
+    const { expenses, dispatchExpenseAction, filterState,
+        dispatchFilterAction, setEditId } = useContext(ExpensesContext);
 
-    const initialFilterState = { selectedCategory: [], isDropDownOpen: false };
-    const [filterState, dispatchFilterAction] = useReducer(
-        expenseFilterReducer,
-        initialFilterState
-    );
+    // const initialFilterState = { selectedCategory: [], isDropDownOpen: false };
+    // const [filterState, dispatchFilterAction] = useReducer(
+    //     expenseFilterReducer,
+    //     initialFilterState
+    // );
 
     const handleDeleteExpense = (id) => {
         console.log(id);
@@ -27,22 +29,19 @@ const ExpenseListPage = ({ view }) => {
     };
 
     const handleDropDownToggle = () => {
-        dispatchFilterAction({ type: 'TOGGLE_DROPDOWN' });
+        dispatchFilterAction(toggleDropDown());
     };
 
     const handleCheckboxChange = (category) => {
-        dispatchFilterAction({
-            type: 'TOGGLE_CATEGORY',
-            payload: category,
-        })
+        dispatchFilterAction(toggleCategory(category));
     };
 
-    const applyFilter = () => {
-        dispatchFilterAction({ type: 'APPLY_FILTER' });
+    const handleApplyFilter = () => {
+        dispatchFilterAction(applyFilter());
     };
 
-    const clearFilter = () => {
-        dispatchFilterAction({ type: 'CLEAR_FILTER' });
+    const handleClearFilter = () => {
+        dispatchFilterAction(clearFilter());
     };
 
     const categories = Array.from(new Set(expenses.map((expense) => expense.category)));
@@ -82,14 +81,14 @@ const ExpenseListPage = ({ view }) => {
                         </div>
                         <div className="flex justify-around border-t p-2">
                             <button
-                                onClick={applyFilter}
+                                onClick={handleApplyFilter}
                                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                             >
                                 Apply
                             </button>
                             <button>
                                 <button
-                                    onClick={clearFilter}
+                                    onClick={handleClearFilter}
                                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                                 >
                                     Clear

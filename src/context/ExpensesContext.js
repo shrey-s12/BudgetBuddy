@@ -3,6 +3,7 @@ import { createContext, useState } from "react";
 // import expenseReducer from "../reducers/expenseReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllExpenses } from "../slices/expenseSlice";
+import { selectFilter } from "../slices/filterSlice";
 
 const ExpensesContext = createContext();
 
@@ -11,7 +12,9 @@ export const ExpensesProvider = ({ children }) => {
     // const [editIndex, setEditIndex] = useState(-1);
     const [editId, setEditId] = useState(-1);
     const expenses = useSelector(selectAllExpenses);
+    const filterState = useSelector(selectFilter);
     const dispatchExpenseAction = useDispatch();
+    const dispatchFilterAction = useDispatch();
 
 
     // const [expenses, dispatchExpenseAction] = useReducer(expenseReducer, null);
@@ -46,6 +49,8 @@ export const ExpensesProvider = ({ children }) => {
         dispatchExpenseAction,
         editId,
         setEditId,
+        filterState,
+        dispatchFilterAction
     }
     return (
         <ExpensesContext.Provider value={contextObject}>

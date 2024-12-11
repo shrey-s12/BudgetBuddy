@@ -14,7 +14,7 @@ const initialState = {
 }
 
 const expenseSlice = createSlice({
-    name: 'expense',
+    name: 'expenseNameInSlice',
     initialState,
     reducers: {
         addExpense: (state, action) => {
@@ -35,6 +35,21 @@ const expenseSlice = createSlice({
     },
 });
 
+// Export Actions
 export const { addExpense, editExpense, deleteExpense } = expenseSlice.actions;
+
+// Export Reducer
 export default expenseSlice.reducer;
+
+// Export Selectors
 export const selectAllExpenses = (state) => state.expenseKewInStore.list;
+export const selectCurrency = (state) => state.expenseKewInStore.currency;
+export const selectAllCategories = (state) => {
+    const allCategories = [];
+    state.expenseKeyInStore.list.forEach((expense) => {
+        if (!allCategories.includes(expense.category)) {
+            allCategories.push(expense.category);
+        }
+    });
+    return allCategories;
+};
