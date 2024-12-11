@@ -20,7 +20,7 @@ const ExpenseListPage = ({ view }) => {
 
     const handleDeleteExpense = (id) => {
         console.log(id);
-        dispatchExpenseAction(deleteExpense(id));
+        dispatchExpenseAction(deleteExpense({id}));
     };
 
     const handleEditExpense = (id) => {

@@ -16,7 +16,7 @@ const filterSlice = createSlice({
             const category = action.payload;
             if (state.selectedCategory.includes(category)) {
                 state.selectedCategory = state.selectedCategory.filter(
-                    (item) => item !== category
+                    (cat) => cat !== category
                 );
             } else {
                 state.selectedCategory.push(category);
