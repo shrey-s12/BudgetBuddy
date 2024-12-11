@@ -4,14 +4,18 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { ExpensesProvider } from './context/ExpensesContext';
+import { store } from './store';
+import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ExpensesProvider>
-        <App />
-      </ExpensesProvider>
+      <Provider store={store}>
+        <ExpensesProvider>
+          <App />
+        </ExpensesProvider>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );

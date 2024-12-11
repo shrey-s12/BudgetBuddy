@@ -3,8 +3,8 @@ import ExpenseList from '../components/ExpenseList';
 import { useNavigate } from 'react-router-dom';
 import ExpensesContext from '../context/ExpensesContext';
 import ExpenseCard from '../components/ExpenseCard';
-import { deleteExpenseAction } from '../reducers/expenseReducer';
 import expenseFilterReducer from '../reducers/filterReducer';
+import { deleteExpense } from '../slices/expenseSlice';
 
 const ExpenseListPage = ({ view }) => {
     const navigate = useNavigate();
@@ -16,9 +16,9 @@ const ExpenseListPage = ({ view }) => {
         initialFilterState
     );
 
-    const handleDeleteExpense = (ind) => {
-        console.log(ind)
-        dispatchExpenseAction(deleteExpenseAction(ind));
+    const handleDeleteExpense = (id) => {
+        console.log(id);
+        dispatchExpenseAction(deleteExpense(id));
     };
 
     const handleEditExpense = (id) => {
@@ -102,7 +102,7 @@ const ExpenseListPage = ({ view }) => {
 
             {/* Display No Expenses Message or the Filtered List */}
             {filteredExpenses.length === 0 ? (
-                <p className="text-center text-gray-500">No expenses found for this category.</p>
+                <p className="text-center text-gray-500">No expenses found.</p>
             ) : view ? (
                 <>
                     <h1>Expense in Table Format</h1>

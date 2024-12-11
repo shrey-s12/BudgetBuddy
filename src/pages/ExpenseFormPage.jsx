@@ -2,21 +2,24 @@ import React, { useContext } from 'react';
 import ExpenseForm from '../components/ExpenseForm';
 import { useNavigate } from 'react-router-dom';
 import ExpensesContext from '../context/ExpensesContext';
+import { addExpense, editExpense } from '../slices/expenseSlice';
 
 const ExpenseFormPage = () => {
     const navigate = useNavigate();
     const { dispatchExpenseAction, setEditId } = useContext(ExpensesContext);
 
     const handleSaveExpense = (expense, id) => {
-        const action = {};
+        // const action = {};
         if (id > -1) {
-            action.type = "EDIT";
-            action.payload = { id, expense };
+            // action.type = "EDIT";
+            // action.payload = { id, expense };
+            dispatchExpenseAction(editExpense({ id, expense }));
         } else {
-            action.type = "ADD";
-            action.payload = { expense };
+            // action.type = "ADD";
+            // action.payload = { expense };
+            dispatchExpenseAction(addExpense({ expense }));
         }
-        dispatchExpenseAction(action)
+        // dispatchExpenseAction(action)
         setEditId(-1);
         navigate('/view-expenses');
     };
