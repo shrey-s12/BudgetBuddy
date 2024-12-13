@@ -35,6 +35,7 @@ const filterSlice = createSlice({
 export const { toggleDropDown, toggleCategory, applyFilter, clearFilter } = filterSlice.actions;
 export default filterSlice.reducer;
 export const selectFilter = (state) => state.filterKeyInStore;
+export const selectCategoryFilter = (state) => state.filterKeyInStore.selectedCategory;
 
 // export const selectIsDropDownOpen = (state) => state.filterNameInSlice.isDropDownOpen;
 // export const selectSelectedCategory = (state) => state.filterNameInSlice.selectedCategory;

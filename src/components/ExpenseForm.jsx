@@ -9,8 +9,8 @@ const emptyForm = () => ({
   category: ""
 });
 
-function formValuesFromLocalStorage(ind, expenses) {
-  const expense = expenses[ind];
+function formValuesFromExpense(id, expenses) {
+  const expense = expenses[id];
   const formValues = {
     ...expense,
   };
@@ -19,7 +19,7 @@ function formValuesFromLocalStorage(ind, expenses) {
 
 const ExpenseForm = ({ onSaveExpense }) => {
   const { expenses, editId } = useContext(ExpensesContext);
-  const prefilledForm = editId > -1 ? formValuesFromLocalStorage(editId, expenses) : emptyForm();
+  const prefilledForm = editId > -1 ? formValuesFromExpense(editId, expenses) : emptyForm();
   const [formValues, setFormValues] = useState(prefilledForm);
 
   const handleSubmit = (e) => {

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import ExpenseList from '../components/ExpenseList';
 import { useNavigate } from 'react-router-dom';
 import ExpensesContext from '../context/ExpensesContext';
@@ -9,6 +9,7 @@ import { toggleDropDown, toggleCategory, applyFilter, clearFilter } from '../sli
 
 const ExpenseListPage = ({ view }) => {
     const navigate = useNavigate();
+    const [reverse, setReverse] = useState(true);
     const { expenses, dispatchExpenseAction, filterState,
         dispatchFilterAction, setEditId } = useContext(ExpensesContext);
 
@@ -20,7 +21,7 @@ const ExpenseListPage = ({ view }) => {
 
     const handleDeleteExpense = (id) => {
         console.log(id);
-        dispatchExpenseAction(deleteExpense({id}));
+        dispatchExpenseAction(deleteExpense({ id }));
     };
 
     const handleEditExpense = (id) => {
@@ -44,6 +45,10 @@ const ExpenseListPage = ({ view }) => {
         dispatchFilterAction(clearFilter());
     };
 
+    const handleReverse = () => {
+        setReverse(!reverse);
+    }
+
     const categories = Array.from(new Set(expenses.map((expense) => expense.category)));
     const filteredExpenses = filterState.selectedCategory.length > 0
         ? expenses.filter((expense) => filterState.selectedCategory.includes(expense.category))
@@ -52,7 +57,7 @@ const ExpenseListPage = ({ view }) => {
     return (
         <div>
             {/* Category Filter Dropdown */}
-            <div className="relative mb-4">
+            <div className="relative flex space-x-5 mb-4">
                 <button
                     onClick={handleDropDownToggle}
                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
@@ -97,6 +102,26 @@ const ExpenseListPage = ({ view }) => {
                         </div>
                     </div>
                 )}
+
+                <button
+                    onClick={handleReverse}
+                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
+                    {reverse ? 'OldestFirst' : 'LatestFirst'}
+                </button>
+
+                {/* <button
+                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
+                    Sort By
+                </button> */}
+                <select>
+                    <option value="sortBy">SortBy</option>
+                    <option value="A-Z">A-Z</option>
+                    <option value="price">price</option>
+                    <option value="date">Date</option>
+                </select>
+
             </div>
 
             {/* Display No Expenses Message or the Filtered List */}
@@ -106,6 +131,7 @@ const ExpenseListPage = ({ view }) => {
                 <>
                     <h1>Expense in Table Format</h1>
                     <ExpenseList
+                        isReverse={reverse}
                         expenses={filteredExpenses}
                         onDeleteExpense={handleDeleteExpense}
                         onEditExpense={handleEditExpense}

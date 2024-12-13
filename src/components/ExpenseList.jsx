@@ -1,6 +1,8 @@
 import React from 'react';
 
-const ExpenseList = ({ expenses, onDeleteExpense, onEditExpense }) => {
+const ExpenseList = ({ isReverse, expenses, onDeleteExpense, onEditExpense }) => {
+
+  const viewExpenses = isReverse ? [...expenses].reverse() : expenses;
   return (
     <div className="overflow-x-auto">
       <table className="table-auto w-full border border-gray-300 text-left">
@@ -14,7 +16,7 @@ const ExpenseList = ({ expenses, onDeleteExpense, onEditExpense }) => {
           </tr>
         </thead>
         <tbody>
-          {expenses.map((expense) => (
+          {viewExpenses.map((expense) => (
             <tr key={expense.id} className="hover:bg-gray-50">
               <td className="border px-4 py-2">{expense.date}</td>
               <td className="border px-4 py-2">${expense.amount}</td>

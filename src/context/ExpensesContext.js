@@ -50,7 +50,7 @@ export const ExpensesProvider = ({ children }) => {
         editId,
         setEditId,
         filterState,
-        dispatchFilterAction
+        dispatchFilterAction,
     }
     return (
         <ExpensesContext.Provider value={contextObject}>
